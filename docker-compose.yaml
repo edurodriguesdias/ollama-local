@@ -1,0 +1,25 @@
+version: "3"
+services:
+  ollama-ui:
+    image: ollamawebui/ollama-webui
+    restart: always
+    ports: 
+      - "8002:8080"
+    environment:
+      - OLLAMA_BASE_URL=ollama-api
+    volumes:
+      - ollama-ui:/app/backend/data
+  
+  ollama-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_storage:/root/.ollama
+
+volumes:
+  ollama-ui:
+  ollama_storage:
